@@ -1,10 +1,10 @@
 const harold = (function () {
   let searchIndex;
   let postsJSON;
-  const rootDir = document.querySelector('html').dataset.hrldRoot;
+  const rootDir = document.querySelector("html").dataset.hrldRoot;
   const postsJsonDataPath =
-    (rootDir && window.location.href.includes(rootDir) ? '/' + rootDir : '') +
-    '/jsonData/posts.json';
+    (rootDir && window.location.href.includes(rootDir) ? "/" + rootDir : "") +
+    "/jsonData/posts.json";
 
   // Loads data for search index
   const fetchPostsJsonData = () => {
@@ -20,16 +20,16 @@ const harold = (function () {
   const buildSearchIndexWithLunr = () => {
     fetchPostsJsonData().then((data) => {
       searchIndex = lunr(function () {
-        this.ref('fileName');
-        this.field('title');
-        this.field('body');
-        this.field('excerpt');
-        this.field('tags');
+        this.ref("fileName");
+        this.field("title");
+        this.field("body");
+        this.field("excerpt");
+        this.field("tags");
         data.forEach((doc) => {
           this.add(
             Object.assign(doc, {
-              tags: doc.tags.join(' '),
-              body: doc.body.replace(/(<([^>]+)>)/gi, ''),
+              tags: doc.tags.join(" "),
+              body: doc.body.replace(/(<([^>]+)>)/gi, ""),
             })
           );
         }, this);
@@ -44,7 +44,7 @@ const harold = (function () {
       const refs = searchResults.map((result) => result.ref);
       return postsJSON.filter((item) => refs.includes(item.fileName));
     } else {
-      console.error('Search index is not ready!');
+      console.error("Search index is not ready!");
     }
   };
 

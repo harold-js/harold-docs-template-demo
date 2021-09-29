@@ -1,34 +1,34 @@
 (function () {
-  const docContents = document.querySelector('[data-js-doc-content]');
+  const docContents = document.querySelector("[data-js-doc-content]");
 
   if (docContents) {
-    const sidebarLeft = document.querySelector('[data-js-docs-sidebar-left]');
+    const sidebarLeft = document.querySelector("[data-js-docs-sidebar-left]");
     const sidebarLeftMenuIcon = document.querySelector(
-      '[data-js-docs-sidebar-left-menu-icon]'
+      "[data-js-docs-sidebar-left-menu-icon]"
     );
-    const sidebarLeftVisibilityClass = 'js-sidebar-left-visible';
-    const headers = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-    const sidebarRight = document.querySelector('[data-js-doc-sidebar-right]');
-    const sidebarLeftActiveMenuItemClass = 'js-sidebar-left-menu-active';
+    const sidebarLeftVisibilityClass = "js-sidebar-left-visible";
+    const headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    const sidebarRight = document.querySelector("[data-js-doc-sidebar-right]");
+    const sidebarLeftActiveMenuItemClass = "js-sidebar-left-menu-active";
 
     const slugify = function (string) {
-      return encodeURIComponent(string.trim().toLowerCase().replace(/ /g, '-'));
+      return encodeURIComponent(string.trim().toLowerCase().replace(/ /g, "-"));
     };
 
     // Builds header anchors
     const wrapHeader = function (element) {
-      const headerWrapper = document.createElement('div');
-      const anchorLinkElement = document.createElement('a');
-      const anchorElement = document.createElement('span');
-      const linkIconElement = document.createElement('i');
-      headerWrapper.setAttribute('data-js-doc-header-wrapper', '');
-      linkIconElement.classList.add('gg-link');
-      anchorLinkElement.setAttribute('href', '#' + slugify(element.innerText));
-      anchorLinkElement.setAttribute('data-js-doc-header-link', '');
+      const headerWrapper = document.createElement("div");
+      const anchorLinkElement = document.createElement("a");
+      const anchorElement = document.createElement("span");
+      const linkIconElement = document.createElement("i");
+      headerWrapper.setAttribute("data-js-doc-header-wrapper", "");
+      linkIconElement.classList.add("gg-link");
+      anchorLinkElement.setAttribute("href", "#" + slugify(element.innerText));
+      anchorLinkElement.setAttribute("data-js-doc-header-link", "");
       anchorLinkElement.appendChild(linkIconElement);
-      anchorElement.setAttribute('id', slugify(element.innerText));
-      anchorElement.setAttribute('data-js-doc-header-anchor', '');
-      element.setAttribute('data-js-doc-header', '');
+      anchorElement.setAttribute("id", slugify(element.innerText));
+      anchorElement.setAttribute("data-js-doc-header-anchor", "");
+      element.setAttribute("data-js-doc-header", "");
       element.parentNode.insertBefore(headerWrapper, element);
       headerWrapper.appendChild(element);
       headerWrapper.appendChild(anchorElement);
@@ -41,13 +41,13 @@
     // Populate right sidebar headers list
     if (sidebarRight) {
       headers.forEach(function (header) {
-        const sidebarRightItem = document.createElement('div');
-        const sidebarRightItemLink = document.createElement('a');
-        sidebarRightItem.classList.add('docs-sidebar-right-item');
+        const sidebarRightItem = document.createElement("div");
+        const sidebarRightItemLink = document.createElement("a");
+        sidebarRightItem.classList.add("docs-sidebar-right-item");
         sidebarRightItemLink.innerText = header.innerText;
         sidebarRightItemLink.setAttribute(
-          'href',
-          '#' + slugify(header.innerText)
+          "href",
+          "#" + slugify(header.innerText)
         );
         sidebarRightItem.appendChild(sidebarRightItemLink);
         sidebarRight.appendChild(sidebarRightItem);
@@ -63,20 +63,20 @@
         );
       };
       const rightSidebarItems = document.querySelectorAll(
-        '.docs-sidebar-right-item'
+        ".docs-sidebar-right-item"
       );
-      const activeClassName = 'js-docs-active-header';
+      const activeClassName = "js-docs-active-header";
       let ticking = false;
 
       // onScroll event listener
-      document.addEventListener('scroll', function () {
+      document.addEventListener("scroll", function () {
         if (!ticking) {
           window.requestAnimationFrame(function () {
             rightSidebarItems.forEach(function (item) {
               const id = item
-                .querySelector('a')
-                .getAttribute('href')
-                .replace('#', '');
+                .querySelector("a")
+                .getAttribute("href")
+                .replace("#", "");
 
               if (
                 isRead(document.getElementById(id)) &&
@@ -104,7 +104,7 @@
 
     if (sidebarLeftMenuIcon && sidebarLeft) {
       // Handle sidebar left visibility
-      sidebarLeftMenuIcon.addEventListener('click', function () {
+      sidebarLeftMenuIcon.addEventListener("click", function () {
         const isVisible = sidebarLeft.classList.contains(
           sidebarLeftVisibilityClass
         );
@@ -116,7 +116,7 @@
       });
 
       // Click outside sidebar to close it
-      document.addEventListener('click', function (event) {
+      document.addEventListener("click", function (event) {
         const isClickInside = sidebarLeft.contains(event.target);
         const isMenuClicked = sidebarLeftMenuIcon.contains(event.target);
         if (
@@ -131,9 +131,11 @@
       // Mark as active sidebar menu item
       const pathname = window.location.pathname;
       if (pathname) {
-        const menuLinks = sidebarLeft.querySelectorAll('a');
+        const menuLinks = sidebarLeft.querySelectorAll("a");
         menuLinks.forEach(function (aElem) {
-          if (aElem.matches(`a[href*="${pathname.replace('/docs', '')}"]`)) {
+          if (
+            aElem.matches(`a[href*="${pathname.replace("/docs.html", "")}"]`)
+          ) {
             aElem.classList.add(sidebarLeftActiveMenuItemClass);
           }
         });

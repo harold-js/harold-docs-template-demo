@@ -1,16 +1,16 @@
 (function () {
-  const scrollTopButton = document.querySelector('[data-js-scroll-top]');
+  const scrollTopButton = document.querySelector("[data-js-scroll-top]");
 
   if (scrollTopButton) {
     let ticking = false;
 
-    document.addEventListener('scroll', function () {
+    document.addEventListener("scroll", function () {
       if (!ticking) {
         window.requestAnimationFrame(function () {
           if (window.scrollY > 200) {
-            scrollTopButton.classList.add('js-visible');
+            scrollTopButton.classList.add("js-visible");
           } else {
-            scrollTopButton.classList.remove('js-visible');
+            scrollTopButton.classList.remove("js-visible");
           }
           ticking = false;
         });
@@ -18,8 +18,8 @@
       }
     });
 
-    scrollTopButton.addEventListener('click', function () {
-      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+    scrollTopButton.addEventListener("click", function () {
+      window.scroll({ top: 0, left: 0, behavior: "smooth" });
     });
   }
 })();
